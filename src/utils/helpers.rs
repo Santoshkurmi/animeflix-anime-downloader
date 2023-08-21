@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 
+use std::io::Write;
 pub fn parse_json(data: Option<String>) -> Option<json::JsonValue> {
     if let Some(output) = data {
         let json_out = json::parse(&output);
@@ -58,4 +59,15 @@ pub fn parse_part(string: String) -> Option<Vec<String>> {
     } else {
         return Some(parts);
     }
+}
+
+pub fn get_input(msg: &str) -> String {
+    let mut str = String::new();
+    while str.len() < 2 {
+        str.clear();
+        print!("{}", msg);
+        std::io::stdout().flush().unwrap();
+        std::io::stdin().read_line(&mut str).unwrap();
+    } //while
+    return str;
 }

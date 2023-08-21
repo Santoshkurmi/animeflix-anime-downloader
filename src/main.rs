@@ -3,10 +3,10 @@ mod interact;
 mod network;
 mod utils;
 use crate::config::constants::DEST;
+use crate::utils::helpers::get_input;
 use interact::cli::{self, get_server_path, show_list_of_animes};
 use network::downloder::run;
 use std::io::Write;
-
 #[tokio::main]
 async fn main() {
     let anime_name = get_input("Enter the anime: ");
@@ -36,15 +36,4 @@ async fn main() {
     std::fs::create_dir(format!("{}{}", DEST, slug));
     let filename = format!("{}{}/{}-episode-{}.mp4", DEST, slug, slug, episode);
     run(server_path, filename, 40).await.unwrap();
-}
-
-fn get_input(msg: &str) -> String {
-    let mut str = String::new();
-    while str.len() < 2 {
-        str.clear();
-        print!("{}", msg);
-        std::io::stdout().flush().unwrap();
-        std::io::stdin().read_line(&mut str).unwrap();
-    } //while
-    return str;
 }
